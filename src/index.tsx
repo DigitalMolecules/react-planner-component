@@ -7,6 +7,6 @@ interface Props {
 
 export const PlannerComponent = ({ text }: Props) => (
   <div className={styles.test}> 
-    NO and Example Planner Component: {text}
+    Example Planner Component: {text}
   </div>
 )

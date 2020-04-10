@@ -18,6 +18,7 @@ RUN apt-get update \
 #    && apt-get -y install --no-install-recommends <your-package-list-here> \
 #    #
 #    # Clean up
+    && apt-get upgrade \
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*

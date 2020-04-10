@@ -21,11 +21,11 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [3000],
 
-	"mounts": [
-        "source=react-planner-component-bashhistory,target=/commandhistory,type=volume",
-        "source=react-planner-component-vscode-extensions-insiders,target=/home/node/.vscode-server-insiders/extensions,type=volume",
-        "source=react-planner-component-vscode-extensions,target=/home/node/.vscode-server/extensions,type=volume"
-    ],
+	//"mounts": [
+        //"source=react-planner-component-bashhistory,target=/commandhistory,type=volume",
+        //"source=react-planner-component-vscode-extensions-insiders,target=/home/node/.vscode-server-insiders/extensions,type=volume",
+        //"source=react-planner-component-vscode-extensions,target=/home/node/.vscode-server/extensions,type=volume"
+    //],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "yarn install",
