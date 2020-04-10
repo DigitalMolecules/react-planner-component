@@ -1,0 +1,11 @@
+node_modules/
+src/
+example/
+package-lock.json
+tsconfig.json
+tsconfig.test.json
+.eslintignore
+.eslintrc.json
+.editorconfig
+.prettier.json
+.travis.yml

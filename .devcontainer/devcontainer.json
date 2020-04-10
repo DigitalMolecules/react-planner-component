@@ -23,8 +23,8 @@
 
 	"mounts": [
         "source=react-planner-component-bashhistory,target=/commandhistory,type=volume",
-        "source=planner-component-insiders,target=/home/node/.vscode-server-insiders/extensions,type=volume",
-        "source=planner-component,target=/home/node/.vscode-server/extensions,type=volume"
+        "source=react-planner-component-vscode-extensions-insiders,target=/home/node/.vscode-server-insiders/extensions,type=volume",
+        "source=react-planner-component-vscode-extensions,target=/home/node/.vscode-server/extensions,type=volume"
     ],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
