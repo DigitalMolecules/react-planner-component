@@ -25,7 +25,8 @@
   },
   "peerDependencies": {
     "react": "^16.0.0",
-    "office-ui-fabric-react": "7.106.0"
+    "office-ui-fabric-react": "7.106.0",
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.27",
@@ -47,7 +48,9 @@
     "prettier": "^1.19.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1"
+    "react-scripts": "^3.4.1",
+    "office-ui-fabric-react": "7.106.0",
+    "moment": "^2.24.0"
   },
   "files": [
     "dist"
