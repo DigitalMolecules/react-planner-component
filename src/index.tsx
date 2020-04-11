@@ -1,63 +1,65 @@
 import * as React from 'react'
 import * as office from 'office-ui-fabric-react'
-import { Grid, Row, Col } from './component/UI/Grid'
-import { Labels } from './component/labels'
-import { Sticky, StickyPositionType } from 'office-ui-fabric-react'
+import * as utils from './utils'
+import { Graph, Row, Col } from './component/graph'
+import { GraphLabels } from './component/GraphLabels'
 import styles from './styles.module.css'
+import { GraphRows } from './component/GraphRows'
 
 interface IProps {
   numberOfCols?: number
   numberOfRows?: number
+  rowHeight?: number
+  colWidth?: number
+  scale?: number
   viewMode?: 'Day' | 'Week'
   startDate?: Date
-  labelStyle?: React.CSSProperties
 }
-
-const DEFAULT_NUMBER_OF_COLS = 10
-const DEFAULT_NUMBER_OF_ROWS = 10
+/*
+export const DEFAULT_SCALE = 1
+*/
 
 export const PlannerComponent = (props: IProps) => {
-  //const [mpsGraphScale, setMpsGraphScale] = React.useState(1)
-  //const [zoom, setZoom] = React.useState(1)
-  //const [height, setHeight] = React.useState(window.innerHeight - 5 /*initial*/ - VERTICAL_MARGINS_PX)
-  //const [lastWindowInnerHeight, setLastWindowInnerHeight] = React.useState(window.innerHeight)
-  //const [plannerTop, setPlannerTop] = React.useState(0)
-  //const [scale, setScale] = React.useState<number>()
-  //const [maxValue, setMaxValue] = React.useState(1)
-  const [, setNumberOfRows] = React.useState(DEFAULT_NUMBER_OF_ROWS)
-  const [numberOfCols, setNumberOfCols] = React.useState(DEFAULT_NUMBER_OF_COLS)
-  //const [scrollWidth] = React.useState(16)
-
-  React.useEffect(() => {
-    setNumberOfCols(props.numberOfCols || DEFAULT_NUMBER_OF_COLS)
-  }, [props.numberOfCols])
-
-  React.useEffect(() => {
-    setNumberOfRows(props.numberOfRows || DEFAULT_NUMBER_OF_ROWS)
-  }, [props.numberOfRows])
 
   return (
-    <div id="planner" className={styles.planner}>
-      <office.ScrollablePane style={{ display: "flex", flexGrow: 1 }}>
-        <div className={styles.mpsMain}>
-          <Grid id="MPSMain">
+    <div id="dm-Planner" className={styles.planner}>
+      <office.ScrollablePane styles={{ root: { display: "flex", flexGrow: 1, flexDirection: 'column' } }}
+        initialScrollPosition={(props.numberOfRows === undefined ? utils.DEFAULT_NUMBER_OF_ROWS : props.numberOfRows) * (props.rowHeight || utils.MIN_ROW_HEIGHT)}
+      >
+        <Graph id="dm-Graph">
+          <GraphRows key="dm-GraphRows"
+            numberRows={props.numberOfRows}
+            numberOfCols={props.numberOfCols}
+            rowHeight={props.rowHeight}
+            colWidth={props.colWidth}
+            scale={props.scale}
+          />
+        </Graph>
 
-          </Grid>
-        </div>        
-
-        <Sticky stickyPosition={StickyPositionType.Footer}>
-          <Grid id="MPSRow">
-            <Row id="MPSLabelRow">
-              <Col id="FirstLabelCol"
-                width={34}
-              />
-              <Labels numberOfCols={numberOfCols}
-                viewMode={props.viewMode}
-                startDate={props.startDate}
-              />
-            </Row>
-          </Grid>
-        </Sticky>
+        <office.Sticky stickyPosition={office.StickyPositionType.Footer}>
+          <Row id="dm-XRow"
+            key="dm-XRow"
+            rowHeight={80}            
+          >
+            <div className={styles.rowContent}>
+              <div className={styles.FirstXCol}>
+                <Col id="dm-XCol"
+                  key="dm-XCol"
+                  width={34}
+                >
+                  <div style={{ backgroundColor: 'White', display: 'flex', flexGrow: 1 }} />
+                </Col>
+              </div>
+              <div className={styles.FirstXLabelRow}>
+                <GraphLabels numberOfCols={props.numberOfCols}
+                  viewMode={props.viewMode}
+                  startDate={props.startDate}
+                  colWidth={props.colWidth}
+                />
+              </div>
+            </div>
+          </Row>
+        </office.Sticky>
       </office.ScrollablePane>
     </div>
   )

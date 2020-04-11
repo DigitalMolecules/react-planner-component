@@ -18,11 +18,27 @@ body {
 #root {
   display: flex;
   flex-grow: 1;
+  flex-direction: column;
+}
+
+#content {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-#app {
+#sliders {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  width: 90%;
+  padding: 10px
+}
+
+
+#graph {
   border: solid;
   width: 90%;
   height: 90%;
