@@ -8,7 +8,7 @@ interface IProps {
     colWidth?: number
 }
 
-export const GraphCols = (props: IProps) => {
+export const DataCols = (props: IProps) => {
     let numberOfCols = props.numberOfCols === undefined ? utils.DEFAULT_NUMBER_OF_COLS : props.numberOfCols
     if (numberOfCols <= 0) numberOfCols = 1
 

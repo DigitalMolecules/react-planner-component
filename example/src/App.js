@@ -6,7 +6,7 @@ import 'react-planner-component/dist/index.css'
 
 const App = () => {
     const [numberOfRows, setNumberOfRows] = useState(20)
-    const [numberOfCols, setNumberOfCols] = useState(20)
+    const [numberOfCols, setNumberOfCols] = useState(10)
     const [rowHeight, setRowHeight] = useState(70)
     const [colWidth, setColWidth] = useState(50)
     const [viewMode, setViewMode] = useState('Day')
