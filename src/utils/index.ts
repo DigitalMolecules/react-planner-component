@@ -19,26 +19,24 @@ export const getDate = (days: number, startDate: Date) => {
 
 export const calcColWidth = (width: number, cols: number, dimensionWidth: number, offset: number = 0): number => {
     if (cols > 0) {
-        const totalWidth = dimensionWidth - offset
+        const totalWidth = dimensionWidth - offset - 18
 
         if ((width * cols) < totalWidth) {
-            return (totalWidth / cols) - offset
+            return (totalWidth / cols)
         }
-
-        return width
     }
 
-    return  MIN_COL_WIDTH
+    return width
 }
 
 export const calcRowHeight = (height: number, rows: number, dimensionHeight: number, offset: number = 0): number => {
-    if (height > 0 && rows > 0) {
-        if ((height * rows) < dimensionHeight) {
-            return (dimensionHeight / rows) - offset
-        }
+    if (rows > 0) {     
+        const totalHeight = dimensionHeight - offset
 
-        return height
+        if ((height * rows) < totalHeight) {
+            return (totalHeight / rows)
+        }
     }
 
-    return MIN_ROW_HEIGHT
+    return height
 }

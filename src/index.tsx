@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Graph } from './component/Graph'
+import { Planner } from './component/Planner'
 import { PlannerContextProvider } from './component/PlannerContextProvider'
 
 interface IProps {
@@ -21,6 +21,6 @@ export const PlannerComponent = (props: IProps) => (
     scale={props.scale}
     viewMode={props.viewMode}
   >
-    <Graph />
+    <Planner />
   </PlannerContextProvider>
 )
