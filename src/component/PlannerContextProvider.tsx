@@ -32,7 +32,7 @@ interface IProps {
 }
 
 export const PlannerContextProvider = (props: IProps) => {
-    const targetRef = React.createRef<HTMLDivElement>()
+    const [targetRef] = React.useState(React.createRef<HTMLDivElement>())
 
     const [rowHeight, setRowHeight] = React.useState(utils.MIN_ROW_HEIGHT)
     const [numberOfRows, setNumberOfRows] = React.useState(utils.DEFAULT_NUMBER_OF_ROWS)
@@ -45,38 +45,43 @@ export const PlannerContextProvider = (props: IProps) => {
     const [xAxisHeight] = React.useState(utils.DEFAULT_XAXIS_HEIGHT)
     const [dimensions, setDimensions] = React.useState<Dimensions>()
 
-    React.useLayoutEffect(() => {
+    const updateSize = () => {
         if (targetRef.current) {
             setDimensions({
                 width: targetRef.current.offsetWidth,
                 height: targetRef.current.offsetHeight
             })
         }
+    }
+
+    React.useLayoutEffect(() => {
+        updateSize()
+    }, [])
+
+    React.useEffect(() => {
+        window.addEventListener('resize', updateSize)
+        return () => window.removeEventListener('resize', updateSize)
     }, [])
 
     React.useEffect(() => {
         if (props.numberOfRows !== undefined && props.numberOfRows > 0) {
             setNumberOfRows(props.numberOfRows)
+
+            if (dimensions && props.rowHeight !== undefined && props.rowHeight >= 0) {
+                setRowHeight(utils.calcRowHeight(props.rowHeight, props.numberOfRows, dimensions.height))
+            }
         }
-    }, [props.numberOfRows])
+    }, [props.numberOfRows, props.rowHeight, dimensions])
 
     React.useEffect(() => {
         if (props.numberOfCols !== undefined && props.numberOfCols > 0) {
             setNumberOfCols(props.numberOfCols)
-        }
-    }, [props.numberOfCols])
 
-    React.useEffect(() => {
-        if (props.colWidth !== undefined && props.colWidth >= utils.MIN_COL_WIDTH) {
-            setColWidth(props.colWidth)
+            if (dimensions && props.colWidth !== undefined && props.colWidth >= 0) {
+                setColWidth(utils.calcColWidth(props.colWidth, props.numberOfCols, dimensions.width, yAxisWidth))
+            }
         }
-    }, [props.colWidth])
-
-    React.useEffect(() => {
-        if (props.rowHeight !== undefined && props.rowHeight >= utils.MIN_ROW_HEIGHT) {
-            setRowHeight(props.rowHeight)
-        }
-    }, [props.rowHeight])
+    }, [props.numberOfCols, props.colWidth, dimensions])
 
     React.useEffect(() => {
         if (props.scale !== undefined && props.scale > 0) {

@@ -5,11 +5,14 @@ import * as office from 'office-ui-fabric-react'
 import 'react-planner-component/dist/index.css'
 
 const App = () => {
-    const [numberOfRows, setNumberOfRows] = useState(20)
-    const [numberOfCols, setNumberOfCols] = useState(10)
+    const [numberOfRows, setNumberOfRows] = useState(3)
+    const [numberOfCols, setNumberOfCols] = useState(5)
     const [rowHeight, setRowHeight] = useState(70)
     const [colWidth, setColWidth] = useState(50)
+    const [scale, setScale] = useState(5)
     const [viewMode, setViewMode] = useState('Day')
+    const [height, setHeight] = useState(100)
+    const [width, setWidth] = useState(100)
 
     return (
         <div id="content">
@@ -55,6 +58,14 @@ const App = () => {
                     />
                 </div>
                 <div style={{ maxWidth: 300, display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
+                    <office.Slider key="ScaleSlider"
+                        label="Scale"
+                        min={0}
+                        max={20}
+                        defaultValue={scale}
+                        onChange={(value) => setScale(value)}
+                        showValue={true}
+                    />
                     <office.Dropdown placeholder="Select an option"
                         label="View mode"
                         selectedKey={viewMode}
@@ -65,15 +76,37 @@ const App = () => {
                         onChange={(ev, option) => setViewMode(option.key)}
                     />
                 </div>
+                <div style={{ maxWidth: 300, display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
+                    <office.Slider key="heightSlider"
+                        label="height"
+                        min={0}
+                        max={100}
+                        defaultValue={height}
+                        onChange={(value) => setHeight(value)}
+                        showValue={true}
+                    />
+                    <office.Slider key="widthSlider"
+                        label="width"
+                        min={0}
+                        max={100}
+                        snapToStep
+                        defaultValue={width}
+                        onChange={(value) => setWidth(value)}
+                        showValue={true}
+                    />
+                </div>
             </div>
             <div id="graph">
-                <PlannerComponent key="Planner"
-                    numberOfRows={numberOfRows}
-                    numberOfCols={numberOfCols}
-                    colWidth={colWidth}
-                    rowHeight={rowHeight}
-                    viewMode={viewMode}
-                />
+                <div id="planner" style={{ width: `${width}%`, height: `${height}%` }}>
+                    <PlannerComponent key="Planner"
+                        numberOfRows={numberOfRows}
+                        numberOfCols={numberOfCols}
+                        colWidth={colWidth}
+                        rowHeight={rowHeight}
+                        viewMode={viewMode}
+                        scale={scale}
+                    />
+                </div>
             </div>
         </div>
     )

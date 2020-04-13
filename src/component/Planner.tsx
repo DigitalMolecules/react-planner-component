@@ -14,7 +14,7 @@ export const Planner = () => {
         >
             <YAxis/>
             <DataCols/>
-            
+        
             <office.Sticky stickyPosition={office.StickyPositionType.Footer}>
                 <XAxis/>               
             </office.Sticky>

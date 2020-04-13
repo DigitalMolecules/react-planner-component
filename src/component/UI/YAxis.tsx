@@ -1,34 +1,39 @@
 import React from 'react'
 import { PlannerContext } from '../PlannerContextProvider'
 import * as office from 'office-ui-fabric-react'
-import * as utils from '../../utils'
 import styles from './styles.module.css'
 
 export const YAxis = () => {
     const context = React.useContext(PlannerContext)
-
+    const totalHeight = (context.rowHeight * context.numberOfRows)
+    
     const buildYLabels = (): React.ReactNode[] => {
         const yLabels: React.ReactNode[] = []
 
         if (context.dimensions) {
-            const currentColWidth = utils.calcColWidth(context.colWidth, context.numberOfCols, context.dimensions.width, context.yAxisWidth)
-            const currentRowHeight = utils.calcRowHeight(context.rowHeight, context.numberOfRows, context.dimensions.height, context.xAxisHeight)
-            const totalRowWidth = context.yAxisWidth + (context.numberOfCols * currentColWidth)
+            const totalRowWidth = context.yAxisWidth + (context.numberOfCols * context.colWidth)
 
             for (let i = context.numberOfRows; i > 0; i--) {
                 yLabels.push(
                     <div id={`dmYRow${i}`}
                         key={`dmYRow${i}`}
                         className={styles.row}
-                        style={{ height: currentRowHeight, width: totalRowWidth }}
+                        style={{ 
+                            height: context.rowHeight, 
+                            width: totalRowWidth, 
+                            top: totalHeight - (context.rowHeight * i),
+                            position: 'absolute'
+                        }}
                     >
                         <div id={`dmYCol${i}`}
                             key={`dmYCol${i}`}
-                            className={styles.col}
-                            style={{ width: context.yAxisWidth, height: currentRowHeight }}
+                            className={styles.yCol}
+                            style={{ 
+                                width: context.yAxisWidth, 
+                                height: context.rowHeight
+                            }}
                         >
-                            <office.Label key={`dimYLabel${i}`}
-                                className={styles.yLabel}>
+                            <office.Label key={`dimYLabel${i}`}>
                                 {(i * context.scale) || i}
                             </office.Label>
                         </div>
@@ -41,7 +46,9 @@ export const YAxis = () => {
 
     return (
         <React.Fragment>
-            {buildYLabels()}
+            <div style={{ height: totalHeight}}>
+                {buildYLabels()}
+            </div>
         </React.Fragment>
     )
 }
