@@ -18,8 +18,7 @@ export const XAxis = () => {
 
             for (var i = 0; i < (context.numberOfCols); i++) {
                 xLabelArray.push(
-                    <div id={`dmXCol${i}`}
-                        key={`dmXCol${i}`}
+                    <div key={`dmXCol${i}`}
                         className={styles.col}
                         style={{ width: context.colWidth, left: startLeftPos, height: context.xAxisHeight }}
                     >

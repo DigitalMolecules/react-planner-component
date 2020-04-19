@@ -15,8 +15,7 @@ export const YAxis = () => {
 
             for (let i = context.numberOfRows; i > 0; i--) {
                 yLabels.push(
-                    <div id={`dmYRow${i}`}
-                        key={`dmYRow${i}`}
+                    <div key={`dmYRow${i}`}
                         className={styles.row}
                         style={{ 
                             height: context.rowHeight, 
@@ -25,8 +24,7 @@ export const YAxis = () => {
                             position: 'absolute'
                         }}
                     >
-                        <div id={`dmYCol${i}`}
-                            key={`dmYCol${i}`}
+                        <div key={`dmYCol${i}`}
                             className={styles.yCol}
                             style={{ 
                                 width: context.yAxisWidth, 

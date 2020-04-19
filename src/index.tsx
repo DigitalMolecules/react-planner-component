@@ -3,7 +3,7 @@ export * from './utils/views'
 import * as React from 'react'
 import { Planner } from './component/Planner'
 import { PlannerContextProvider } from './provider/PlannerContextProvider'
-import { ICapacity, ViewMode } from './utils'
+import { ICapacity, ViewMode, IItem } from './utils'
 import 'moment/locale/fr';
 import 'moment/locale/nl';
 import 'moment/locale/de';
@@ -21,6 +21,7 @@ interface IProps {
   viewMode?: ViewMode
   startDate?: Date
   capacity?: ICapacity[]
+  items?: IItem[]
 }
 
 export const PlannerComponent = (props: IProps) => (
@@ -33,6 +34,7 @@ export const PlannerComponent = (props: IProps) => (
     scale={props.scale}
     viewMode={props.viewMode}
     capacity={props.capacity}
+    items={props.items}
   >
     <Planner />
   </PlannerContextProvider>

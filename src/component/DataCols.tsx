@@ -7,8 +7,9 @@ import moment from 'moment'
 
 export const DataCols = () => {
     const context = React.useContext(PlannerContext)
+    const [dataCols, setDataCols] = React.useState<React.ReactNode[]>([])
 
-    const build = (): React.ReactNode[] => {
+    React.useEffect(() => {
         const data: React.ReactNode[] = []
 
         if (context.dimensions) {
@@ -16,11 +17,11 @@ export const DataCols = () => {
             let startLeftPos = context.yAxisWidth
             let colDate = moment(context.startDate)
 
-            for (var i = 0; i < (context.numberOfCols); i++) {               
+            for (var i = 0; i < (context.numberOfCols); i++) {
+
                 // Column
                 data.push(
-                    <div id={`dmYCol${i}`}
-                        key={`dmYCol${i}`}
+                    <div key={`dmYCol${i}`}
                         className={styles.col}
                         style={{
                             width: context.colWidth,
@@ -33,53 +34,32 @@ export const DataCols = () => {
 
                 // Capacity
                 data.push(
-                    <Capacity key={`dmCapacity${i}`}
-                        moment={colDate}                        
+                    <Capacity key={`dmCapacity${colDate}`}
+                        date={colDate.toDate()}
                         leftPos={startLeftPos}
                         totalHeight={totalHeight}
                     />
                 )
-
-                // TODO Loop through data items for this date in sequence order and render on top of each other
-                // Data Test at i + 1
-                const dataItem = (i + 1) + 1
-                let height = (context.rowHeight * (dataItem  / context.scale))
-                let top = totalHeight - height
+                
                 data.push(
-                    <CellBlock id={`dmDataItem${i}`}
-                        key={`dmDataItem${i}`}
-                        top={top}
-                        left={startLeftPos}
-                        width={context.colWidth}
-                        height={height}
+                    <CellBlock key={`dmDataItem${colDate}`}
+                        date={colDate.toDate()}
+                        leftPos={startLeftPos}                        
+                        totalHeight={totalHeight}
                     />
                 )
-
-                // Data Test at 1 on top
-                height = (context.rowHeight * (1 / context.scale))
-                top = top - height
-                data.push(
-                    <CellBlock id={`dmFDataItem${i}`}
-                        key={`dmFDataItem${i}`}
-                        top={top}
-                        left={startLeftPos}
-                        width={context.colWidth}
-                        height={height}
-                        forecast
-                    />
-                )                
 
                 startLeftPos += context.colWidth
                 colDate.add(context.noOfDaysOffset, 'd')
             }
         }
 
-        return data
-    }
+        setDataCols(data)
+    }, [context])
 
     return (
         <React.Fragment>
-            {build()}
+            {dataCols}
         </React.Fragment>
     )
 }

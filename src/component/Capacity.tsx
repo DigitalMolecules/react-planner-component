@@ -5,7 +5,7 @@ import { PlannerContext } from '../provider/PlannerContextProvider'
 import moment from 'moment'
 
 interface ICapacityProps {
-    moment: moment.Moment
+    date: Date
     leftPos: number
     totalHeight: number
 }
@@ -20,10 +20,8 @@ export const Capacity = (props: ICapacityProps) => {
         switch (context.viewMode) {
             case utils.ViewMode.Day: {
                 context.capacity.forEach(value => {
-                    value.date.setHours(0, 0, 0, 0)
-                    var date = moment(value.date)
 
-                    if (moment(date.toDate()).isSame(props.moment.toDate())) {
+                    if (moment(value.date).isSame(props.date, 'date')) {
                         updCapacity = value.capacity
                     }
                 })
@@ -32,14 +30,11 @@ export const Capacity = (props: ICapacityProps) => {
             }
 
             case utils.ViewMode.Week: {
-                const firstDayOfWeek = moment(props.moment).startOf('week').toDate()
-                const lastDayOfWeek = moment(props.moment).endOf('week').toDate()
+                const firstDayOfWeek = moment(props.date).startOf('week')
+                const lastDayOfWeek = moment(props.date).endOf('week')
 
                 context.capacity.forEach(value => {
-                    value.date.setHours(0, 0, 0, 0)
-                    var date = moment(value.date)
-
-                    if (moment(date.toDate()).isBetween(firstDayOfWeek, lastDayOfWeek)) {
+                    if (moment(value.date).isBetween(firstDayOfWeek, lastDayOfWeek, 'date', '[]')) {
                         updCapacity += value.capacity
                     }
                 })
@@ -49,12 +44,10 @@ export const Capacity = (props: ICapacityProps) => {
         }
         
         setCapacity(updCapacity)
-    }, [context.capacity, context.viewMode, context.noOfDaysOffset])
+    }, [props])
 
     return (
-        <div id={`dmCapacity${props.moment.toString()}`}
-            key={`dmCapacity${props.moment.toString()}`}
-            className={styles.capacity}
+        <div className={styles.capacity}
             style={{
                 width: context.colWidth,
                 left: props.leftPos,

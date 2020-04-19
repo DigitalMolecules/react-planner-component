@@ -3,20 +3,20 @@ import React, { useState } from 'react'
 import { PlannerComponent, ViewMode } from 'react-planner-component'
 import * as office from 'office-ui-fabric-react'
 import 'react-planner-component/dist/index.css'
-import { mockCapacity } from './mockData'
+import { mockCapacity, mockItems } from './mockData'
 
 const App = () => {
-    const [numberOfRows, setNumberOfRows] = useState(20)
-    const [numberOfCols, setNumberOfCols] = useState(5)
+    const [numberOfRows, setNumberOfRows] = useState(30)
+    const [numberOfCols, setNumberOfCols] = useState(8)
     const [rowHeight, setRowHeight] = useState(70)
     const [colWidth, setColWidth] = useState(50)
-    const [scale, setScale] = useState(5)
+    const [scale, setScale] = useState(1)
     const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.Day)
     const [height, setHeight] = useState(100)
     const [width, setWidth] = useState(100)
 
     return (
-        <div id="content">
+        <div id="content" style={{ padding: 8 }}>
             <div id="sliders">
                 <div style={{ maxWidth: 300, display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
                     <office.Slider key="RowSlider"
@@ -107,6 +107,7 @@ const App = () => {
                         viewMode={viewMode}
                         scale={scale}
                         capacity={mockCapacity()}
+                        items={mockItems()}
                     />
                 </div>
             </div>

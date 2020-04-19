@@ -10,7 +10,7 @@ export const Planner = () => {
 
     return (
         <office.ScrollablePane styles={{ root: { display: "flex", flexGrow: 1, flexDirection: 'column' } }}
-            initialScrollPosition={context.numberOfRows * context.rowHeight}
+            initialScrollPosition={context.numberOfRows * context.rowHeight + context.numberOfCols + context.colWidth + context.viewMode + context.scale}
         >
             <YAxis/>
             <DataCols/>

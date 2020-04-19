@@ -19,7 +19,8 @@ export const PlannerContext = React.createContext({
     xAxisHeight: utils.DEFAULT_XAXIS_HEIGHT,
     dimensions: undefined as Dimensions | undefined,
     noOfDaysOffset: 1,
-    capacity: [] as utils.ICapacity[]
+    capacity: [] as utils.ICapacity[],
+    items: [] as utils.IItem[]
 })
 
 interface IProps {
@@ -31,6 +32,7 @@ interface IProps {
     viewMode?: utils.ViewMode
     startDate: Date
     capacity?: utils.ICapacity[]
+    items?: utils.IItem[]
     children: React.ReactNode
 }
 
@@ -51,6 +53,7 @@ export const PlannerContextProvider = (props: IProps) => {
 
     // data
     const [capacity, setCapacity] = React.useState<utils.ICapacity[]>([])
+    const [items, setItems] = React.useState<utils.IItem[]>([])
 
     const updateSize = () => {
         if (targetRef.current) {
@@ -111,6 +114,10 @@ export const PlannerContextProvider = (props: IProps) => {
         setCapacity([...props.capacity || []])
     }, [props.capacity])
 
+    React.useEffect(() => {
+        setItems([...props.items || []])
+    }, [props.items])
+
     return (
         <PlannerContext.Provider value={{ 
             numberOfCols, 
@@ -124,6 +131,7 @@ export const PlannerContextProvider = (props: IProps) => {
             xAxisHeight, 
             dimensions,
             capacity,
+            items,
             noOfDaysOffset
         }}>
             <div id="dm-Planner"
