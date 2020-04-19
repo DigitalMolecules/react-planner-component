@@ -1,5 +1,5 @@
 import React from 'react'
-import { PlannerContext } from '../PlannerContextProvider'
+import { PlannerContext } from '../provider/PlannerContextProvider'
 import * as office from 'office-ui-fabric-react'
 import styles from './styles.module.css'
 

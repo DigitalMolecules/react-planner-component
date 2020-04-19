@@ -1,6 +1,16 @@
+export * from './utils/views'
+
 import * as React from 'react'
 import { Planner } from './component/Planner'
-import { PlannerContextProvider } from './component/PlannerContextProvider'
+import { PlannerContextProvider } from './provider/PlannerContextProvider'
+import { ICapacity, ViewMode } from './utils'
+import 'moment/locale/fr';
+import 'moment/locale/nl';
+import 'moment/locale/de';
+import 'moment/locale/en-gb';
+import moment from 'moment'
+
+moment.locale(navigator.language)
 
 interface IProps {
   numberOfCols?: number
@@ -8,11 +18,13 @@ interface IProps {
   rowHeight?: number
   colWidth?: number
   scale?: number
-  viewMode?: 'Day' | 'Week'
+  viewMode?: ViewMode
   startDate?: Date
+  capacity?: ICapacity[]
 }
 
 export const PlannerComponent = (props: IProps) => (
+  
   <PlannerContextProvider startDate={props.startDate || new Date()}
     colWidth={props.colWidth}
     numberOfCols={props.numberOfCols}
@@ -20,6 +32,7 @@ export const PlannerComponent = (props: IProps) => (
     rowHeight={props.rowHeight}
     scale={props.scale}
     viewMode={props.viewMode}
+    capacity={props.capacity}
   >
     <Planner />
   </PlannerContextProvider>

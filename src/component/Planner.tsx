@@ -1,9 +1,9 @@
 import React from 'react'
 import * as office from 'office-ui-fabric-react'
-import { PlannerContext } from './PlannerContextProvider'
-import { YAxis } from './UI/YAxis'
-import { XAxis } from './UI/XAxis'
-import { DataCols } from './UI/DataCols'
+import { PlannerContext } from '../provider/PlannerContextProvider'
+import { YAxis } from './YAxis'
+import { XAxis } from './XAxis'
+import { DataCols } from './DataCols'
 
 export const Planner = () => {
     const context = React.useContext(PlannerContext)

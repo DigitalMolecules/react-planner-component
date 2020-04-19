@@ -1,7 +1,9 @@
 import * as React from 'react'
-import { PlannerContext } from '../PlannerContextProvider'
+import { PlannerContext } from '../provider/PlannerContextProvider'
 import styles from './styles.module.css'
 import { CellBlock } from '.'
+import { Capacity } from './Capacity'
+import moment from 'moment'
 
 export const DataCols = () => {
     const context = React.useContext(PlannerContext)
@@ -12,9 +14,9 @@ export const DataCols = () => {
         if (context.dimensions) {
             const totalHeight = context.rowHeight * context.numberOfRows
             let startLeftPos = context.yAxisWidth
-            for (var i = 0; i < (context.numberOfCols); i++) {
-                //let colDate = utils.getDate(context.viewMode === 'Day' ? i : i * 7, context.startDate)
+            let colDate = moment(context.startDate)
 
+            for (var i = 0; i < (context.numberOfCols); i++) {               
                 // Column
                 data.push(
                     <div id={`dmYCol${i}`}
@@ -29,16 +31,12 @@ export const DataCols = () => {
                     />
                 )
 
-                // Capacity test at 5
-                const capacity = 5
+                // Capacity
                 data.push(
-                    <div id={`dmCapacity${i}`}
-                        key={`dmCapacity${i}`}
-                        className={styles.capacity}
-                        style={{ 
-                            width: context.colWidth, 
-                            left: startLeftPos,
-                            top: (totalHeight) - (context.rowHeight * (capacity / context.scale)) }}
+                    <Capacity key={`dmCapacity${i}`}
+                        moment={colDate}                        
+                        leftPos={startLeftPos}
+                        totalHeight={totalHeight}
                     />
                 )
 
@@ -72,6 +70,7 @@ export const DataCols = () => {
                 )                
 
                 startLeftPos += context.colWidth
+                colDate.add(context.noOfDaysOffset, 'd')
             }
         }
 

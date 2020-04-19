@@ -1,9 +1,9 @@
 import React from 'react'
-import { PlannerContext } from '../PlannerContextProvider'
+import { PlannerContext } from '../provider/PlannerContextProvider'
 import * as office from 'office-ui-fabric-react'
-import * as utils from '../../utils'
 import styles from './styles.module.css'
 import moment from 'moment'
+import { ViewMode } from '../utils'
 
 export const XAxis = () => {
     const context = React.useContext(PlannerContext)
@@ -14,11 +14,9 @@ export const XAxis = () => {
         if (context.dimensions) {            
             const rotateDeg = context.colWidth < 70 ? 90 : 0
             let startLeftPos = context.yAxisWidth
-    
-            for (var i = 0; i < (context.numberOfCols); i++) {
-                let colDate = utils.getDate(context.viewMode === 'Day' ? i : i * 7, context.startDate)
-                const momentDate = moment(colDate)
+            let colDate = moment(context.startDate)
 
+            for (var i = 0; i < (context.numberOfCols); i++) {
                 xLabelArray.push(
                     <div id={`dmXCol${i}`}
                         key={`dmXCol${i}`}
@@ -29,15 +27,15 @@ export const XAxis = () => {
                             className={styles.xLabel}
                             style={{ transform: `${'rotate(' + rotateDeg + 'deg)'}` }}
                         >
-                            {context.viewMode === 'Day' &&
+                            {context.viewMode === ViewMode.Day &&
                                 <div style={{ whiteSpace: 'nowrap' }}>
-                                    {momentDate.format('ddd')} <b> {momentDate.format('Do')} </b> <br /> {momentDate.format('MMM YYYY')}
+                                    {colDate.format('ddd')} <b> {colDate.format('Do')} </b> <br /> {colDate.format('MMM YYYY')}
                                 </div>
                             }
 
-                            {context.viewMode === 'Week' &&
+                            {context.viewMode === ViewMode.Week &&
                                 <div style={{ whiteSpace: 'nowrap' }}>
-                                    Week {momentDate.format('ww')} <br /> {momentDate.format('MMM YYYY')}
+                                    Week {colDate.format('ww')} <br /> {colDate.format('MMM YYYY')}
                                 </div>
                             }
                         </office.Label>
@@ -45,6 +43,7 @@ export const XAxis = () => {
                 )
 
                 startLeftPos += context.colWidth
+                colDate.add(context.noOfDaysOffset, 'd')
             }
         }
         return xLabelArray

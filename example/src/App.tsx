@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 
-import { PlannerComponent } from 'react-planner-component'
+import { PlannerComponent, ViewMode } from 'react-planner-component'
 import * as office from 'office-ui-fabric-react'
 import 'react-planner-component/dist/index.css'
+import { mockCapacity } from './mockData'
 
 const App = () => {
-    const [numberOfRows, setNumberOfRows] = useState(3)
+    const [numberOfRows, setNumberOfRows] = useState(20)
     const [numberOfCols, setNumberOfCols] = useState(5)
     const [rowHeight, setRowHeight] = useState(70)
     const [colWidth, setColWidth] = useState(50)
     const [scale, setScale] = useState(5)
-    const [viewMode, setViewMode] = useState('Day')
+    const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.Day)
     const [height, setHeight] = useState(100)
     const [width, setWidth] = useState(100)
 
@@ -70,10 +71,10 @@ const App = () => {
                         label="View mode"
                         selectedKey={viewMode}
                         options={[
-                            { key: 'Day', text: 'Day' },
-                            { key: 'Week', text: 'Week' },
+                            { key: ViewMode.Day, text: 'Day' },
+                            { key: ViewMode.Week, text: 'Week' },
                         ]}
-                        onChange={(ev, option) => setViewMode(option.key)}
+                        onChange={(ev, option) => setViewMode(option?.key as ViewMode)}
                     />
                 </div>
                 <div style={{ maxWidth: 300, display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
@@ -105,6 +106,7 @@ const App = () => {
                         rowHeight={rowHeight}
                         viewMode={viewMode}
                         scale={scale}
+                        capacity={mockCapacity()}
                     />
                 </div>
             </div>

@@ -17,7 +17,9 @@ export const PlannerContext = React.createContext({
     startDate: new Date(),
     yAxisWidth: utils.DEFAULT_YAXIS_WIDTH,
     xAxisHeight: utils.DEFAULT_XAXIS_HEIGHT,
-    dimensions: undefined as Dimensions | undefined
+    dimensions: undefined as Dimensions | undefined,
+    noOfDaysOffset: 1,
+    capacity: [] as utils.ICapacity[]
 })
 
 interface IProps {
@@ -26,8 +28,9 @@ interface IProps {
     colWidth?: number
     rowHeight?: number
     scale?: number
-    viewMode?: 'Day' | 'Week'
+    viewMode?: utils.ViewMode
     startDate: Date
+    capacity?: utils.ICapacity[]
     children: React.ReactNode
 }
 
@@ -39,11 +42,15 @@ export const PlannerContextProvider = (props: IProps) => {
     const [numberOfCols, setNumberOfCols] = React.useState(utils.DEFAULT_NUMBER_OF_COLS)
     const [colWidth, setColWidth] = React.useState(utils.MIN_COL_WIDTH)
     const [scale, setScale] = React.useState(utils.DEFAULT_SCALE)
-    const [viewMode, setViewMode] = React.useState(utils.DEFAULT_VIEW_MODE)
+    const [viewMode, setViewMode] = React.useState<utils.ViewMode>(utils.DEFAULT_VIEW_MODE)
     const [startDate, setStartDate] = React.useState(new Date())
     const [yAxisWidth] = React.useState(utils.DEFAULT_YAXIS_WIDTH)
     const [xAxisHeight] = React.useState(utils.DEFAULT_XAXIS_HEIGHT)
     const [dimensions, setDimensions] = React.useState<Dimensions>()
+    const [noOfDaysOffset, setNoOfDaysOffset] = React.useState(1)
+
+    // data
+    const [capacity, setCapacity] = React.useState<utils.ICapacity[]>([])
 
     const updateSize = () => {
         if (targetRef.current) {
@@ -91,6 +98,7 @@ export const PlannerContextProvider = (props: IProps) => {
 
     React.useEffect(() => {
         setViewMode(props.viewMode || utils.DEFAULT_VIEW_MODE)
+        setNoOfDaysOffset((props.viewMode || utils.DEFAULT_VIEW_MODE) === utils.ViewMode.Day ? 1 : 7)
     }, [props.viewMode])
 
     React.useEffect(() => {
@@ -99,8 +107,25 @@ export const PlannerContextProvider = (props: IProps) => {
         setStartDate(startDate)
     }, [props.startDate])
 
+    React.useEffect(() => {
+        setCapacity([...props.capacity || []])
+    }, [props.capacity])
+
     return (
-        <PlannerContext.Provider value={{ numberOfCols, numberOfRows, colWidth, rowHeight, scale, viewMode, startDate, yAxisWidth, xAxisHeight, dimensions }}>
+        <PlannerContext.Provider value={{ 
+            numberOfCols, 
+            numberOfRows, 
+            colWidth, 
+            rowHeight, 
+            scale, 
+            viewMode, 
+            startDate, 
+            yAxisWidth, 
+            xAxisHeight, 
+            dimensions,
+            capacity,
+            noOfDaysOffset
+        }}>
             <div id="dm-Planner"
                 className={styles.planner}
                 ref={targetRef}
