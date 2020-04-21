@@ -26,7 +26,7 @@ export const mockItems = (): IItem[] => {
 
         items.push({
             date: colDate,
-            capacity: 2,
+            capacity: 1,
             displayAsGradient: true,
             hexColor: '#CD5B33',
             sequenceNumber: 1
@@ -34,7 +34,7 @@ export const mockItems = (): IItem[] => {
 
         items.push({
             date: colDate,
-            capacity: 3,
+            capacity: 1,
             hexColor: '#CD5B33',
             sequenceNumber: 0
         })

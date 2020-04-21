@@ -13,7 +13,7 @@ export const DEFAULT_CELL_COLOR = '#CD5B33'
 export const DEFAULT_YAXIS_WIDTH = 34
 export const DEFAULT_XAXIS_HEIGHT = 65
 
-export const calcColWidth = (width: number, cols: number, dimensionWidth: number, offset: number = 0): number => {
+export const calcColWidth = (width: number, cols: number, dimensionWidth: number, offset: number = 0): number => {    
     if (cols > 0) {
         const totalWidth = dimensionWidth - offset - 20
 
